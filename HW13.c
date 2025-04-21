@@ -8,7 +8,7 @@
 double dRand(void);
 int Setup(int *pnChan, int*pnPt);
 int CollectData(int nChan, int nPt, double Data[][nPt]);
-int AvgData(int nChan, int nPt, double Data[][nPt]);
+int AvgData(int nChan, int nPt, double Data[][nPt], double Avg[]);
 int WriteBinary(int nCHan, int nPt, double Data[][nPt], char * pfname, int nSize);
 int ReadBinary(int nChan, int nPt, double Data[][nPt], const char * pfname);
 int Results(int nChan, double Avg1[], double Avg2[]);
@@ -32,16 +32,16 @@ int Setup(int *pnChan, int *pnPt) {
     printf("input number of channels to use: [2...10]");
     scanf(" %d", &chan);
 
-    printf("Amount of data points: \n[0] - quit\n[1] - 2048\n[2] - 4096\n[3] - 8192");
+    printf("Amount of data points: \n[0] - quit\n[1] - 2048\n[2] - 4096\n[3] - 8192\n0 or unvalid to exit");
 
-    switch((int)getchar()){
-        case "2":
+    switch(getchar()){
+        case '1':
         break;
 
-        case "4":
+        case '2':
         break;
 
-        case "8":
+        case '3':
         break;
 
         default: 
@@ -53,15 +53,29 @@ int Setup(int *pnChan, int *pnPt) {
 
 int CollectData(int nChan, int nPt, double Data[][nPt]) {
 
-    double * piData, piDataEnd = piData + nPt;
-    for (piData = Data; piData < piDataEnd; ) {
-        
+    for (int i = 0; i < nChan; i++) { 
+        for (int j = 0; j < nPt; j++) {
+            Data[i][j] = dRand();
+        }
     }
 
     return 0;
 }
 
-int AvgData(int nChan, int nPt, double Data[][nPt]) {
+int AvgData(int nChan, int nPt, double Data[][nPt], double Avg[]) {
+    long long int sum = 0;
+
+    for ( int i = 0; i < nChan; i++ ) {
+        for ( int j = 0; j < nPt; j++ ) {
+            sum += Data[i][j];
+        }
+        Avg[i] = sum;
+        sum = 0; // reset for next loop
+        if ( Avg[i] == 0 ) {
+            printf("Array was empty/not assigned");
+            return -3;
+        }
+    }
     return 0;
 }
 
