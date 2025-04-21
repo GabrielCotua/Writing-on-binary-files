@@ -78,8 +78,20 @@ int AvgData(int nChan, int nPt, double Data[][nPt], double Avg[]) {
     }
     return 0;
 }
-
+// check
 int WriteBinary(int nCHan, int nPt, double Data[][nPt], char * pfname, int nSize) {
+    FILE * pfile = fopen(pfname, "r");
+    
+    if (pfile == NULL) {
+        printf("Error opening the file. File does not exist");
+        return -4;
+    }
+    pfile = fopen(pfname, "rb+");
+    fprintf(pfile, "%", nChan);
+
+            
+
+
     return 0;
 }
 
