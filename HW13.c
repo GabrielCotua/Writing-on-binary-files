@@ -65,6 +65,7 @@ int main(void) {
                         AvgData(nChan, nPt, (double (*)[nPt]) pData2, avg2);
 
                         Results(nChan, avg1, avg2);
+                        printf("\n\nSuccess!\n");
                         free(pData2);
                     }
                 }
